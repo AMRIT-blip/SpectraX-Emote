@@ -91,7 +91,7 @@ function showHome() {
 }
 
 function initializeLogin() {
-    const isUnlocked = localStorage.getItem(LOGIN_STORAGE_KEY) === 'true';
+    const isUnlocked = sessionStorage.getItem(LOGIN_STORAGE_KEY) === 'true';
     const loginScreen = document.getElementById('login-screen');
     const appShell = document.getElementById('app-shell');
 
@@ -142,7 +142,7 @@ async function handleLogin(event) {
             return;
         }
 
-        localStorage.setItem(LOGIN_STORAGE_KEY, 'true');
+        sessionStorage.setItem(LOGIN_STORAGE_KEY, 'true');
         message.textContent = data.message || 'Login successful. Opening dashboard...';
         message.className = 'login-message success';
 
