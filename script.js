@@ -44,6 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function triggerAppReveal() {
+    const appShell = document.getElementById('app-shell');
+    if (!appShell) return;
+
+    appShell.classList.remove('app-entering');
+    void appShell.offsetWidth;
+    appShell.classList.add('app-entering');
+
+    setTimeout(() => {
+        appShell.classList.remove('app-entering');
+    }, 1300);
+}
+
 /* Apply maintenance styles to region buttons */
 function applyRegionStyles() {
     document.querySelectorAll('.region-btn').forEach(btn => {
@@ -99,6 +112,7 @@ function initializeLogin() {
         document.body.classList.remove('login-active');
         loginScreen.classList.add('hidden');
         appShell.classList.remove('app-locked');
+        triggerAppReveal();
     } else {
         document.body.classList.add('login-active');
         loginScreen.classList.remove('hidden');
@@ -150,6 +164,7 @@ async function handleLogin(event) {
             document.body.classList.remove('login-active');
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-shell').classList.remove('app-locked');
+            triggerAppReveal();
             submitButton.disabled = false;
         }, 350);
     } catch (_error) {
@@ -553,3 +568,4 @@ function closeTutorial(event) {
         }
     }
 }
+
