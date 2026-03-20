@@ -109,11 +109,13 @@ function initializeLogin() {
     const appShell = document.getElementById('app-shell');
 
     if (isUnlocked) {
+        document.documentElement.classList.add('session-unlocked');
         document.body.classList.remove('login-active');
         loginScreen.classList.add('hidden');
         appShell.classList.remove('app-locked');
         triggerAppReveal();
     } else {
+        document.documentElement.classList.remove('session-unlocked');
         document.body.classList.add('login-active');
         loginScreen.classList.remove('hidden');
         appShell.classList.add('app-locked');
@@ -161,6 +163,7 @@ async function handleLogin(event) {
         message.className = 'login-message success';
 
         setTimeout(() => {
+            document.documentElement.classList.add('session-unlocked');
             document.body.classList.remove('login-active');
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-shell').classList.remove('app-locked');
@@ -568,4 +571,3 @@ function closeTutorial(event) {
         }
     }
 }
-
