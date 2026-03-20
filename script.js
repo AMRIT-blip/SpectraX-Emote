@@ -107,18 +107,24 @@ function initializeLogin() {
     const isUnlocked = sessionStorage.getItem(LOGIN_STORAGE_KEY) === 'true';
     const loginScreen = document.getElementById('login-screen');
     const appShell = document.getElementById('app-shell');
+    const loginForm = document.querySelector('.login-form');
+    const loginLoading = document.getElementById('login-loading');
 
     if (isUnlocked) {
         document.documentElement.classList.add('session-unlocked');
         document.body.classList.remove('login-active');
         loginScreen.classList.add('hidden');
         appShell.classList.remove('app-locked');
+        if (loginForm) loginForm.classList.remove('loading-hidden');
+        if (loginLoading) loginLoading.classList.remove('active');
         triggerAppReveal();
     } else {
         document.documentElement.classList.remove('session-unlocked');
         document.body.classList.add('login-active');
         loginScreen.classList.remove('hidden');
         appShell.classList.add('app-locked');
+        if (loginForm) loginForm.classList.remove('loading-hidden');
+        if (loginLoading) loginLoading.classList.remove('active');
     }
 }
 
@@ -129,6 +135,8 @@ async function handleLogin(event) {
     const password = document.getElementById('login-password').value.trim();
     const message = document.getElementById('login-message');
     const submitButton = document.querySelector('.login-btn');
+    const loginForm = document.querySelector('.login-form');
+    const loginLoading = document.getElementById('login-loading');
 
     if (!username || !password) {
         message.textContent = 'Please enter both username and password.';
@@ -161,16 +169,22 @@ async function handleLogin(event) {
         sessionStorage.setItem(LOGIN_STORAGE_KEY, 'true');
         message.textContent = data.message || 'Login successful. Opening dashboard...';
         message.className = 'login-message success';
+        if (loginForm) loginForm.classList.add('loading-hidden');
+        if (loginLoading) loginLoading.classList.add('active');
 
         setTimeout(() => {
             document.documentElement.classList.add('session-unlocked');
             document.body.classList.remove('login-active');
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-shell').classList.remove('app-locked');
+            if (loginForm) loginForm.classList.remove('loading-hidden');
+            if (loginLoading) loginLoading.classList.remove('active');
             triggerAppReveal();
             submitButton.disabled = false;
-        }, 350);
+        }, 1100);
     } catch (_error) {
+        if (loginForm) loginForm.classList.remove('loading-hidden');
+        if (loginLoading) loginLoading.classList.remove('active');
         message.textContent = 'Unable to reach the login server.';
         message.className = 'login-message error';
         submitButton.disabled = false;
