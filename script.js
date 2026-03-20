@@ -57,6 +57,10 @@ function triggerAppReveal() {
     }, 1300);
 }
 
+function isActionCooldownActive() {
+    return document.querySelector('.action-btn.disabled, .action-btn:disabled') !== null;
+}
+
 /* Apply maintenance styles to region buttons */
 function applyRegionStyles() {
     document.querySelectorAll('.region-btn').forEach(btn => {
@@ -424,7 +428,7 @@ function setCooldown() {
 
 /* API Actions */
 async function performEmote(id, name) {
-    if (document.querySelector('.action-btn').disabled) return; // Prevent spam
+    if (isActionCooldownActive()) return;
 
     if (!performConfig.tc) {
         showToast('Please configure Team Code first!', 'error');
@@ -453,7 +457,7 @@ async function performEmote(id, name) {
 }
 
 function performManualEmote() {
-    if (document.querySelector('.action-btn').disabled) return;
+    if (isActionCooldownActive()) return;
     const id = document.getElementById('manual-emote-id').value;
     if (!id) {
         showToast('Enter an Emote ID', 'error');
@@ -463,7 +467,7 @@ function performManualEmote() {
 }
 
 async function apiBotInvite() {
-    if (document.querySelector('.action-btn').disabled) return;
+    if (isActionCooldownActive()) return;
 
     const region = document.getElementById('invite-region').value;
     const size = document.getElementById('invite-size').value;
@@ -489,7 +493,7 @@ async function apiBotInvite() {
 }
 
 async function apiJoinTeam() {
-    if (document.querySelector('.action-btn').disabled) return;
+    if (isActionCooldownActive()) return;
 
     const region = document.getElementById('join-region').value;
     const tc = document.getElementById('join-tc').value;
@@ -513,7 +517,7 @@ async function apiJoinTeam() {
 }
 
 async function apiForceLeave() {
-    if (document.querySelector('.action-btn').disabled) return;
+    if (isActionCooldownActive()) return;
 
     const region = document.getElementById('leave-region').value;
     const verification = document.getElementById('leave-key').value; // Static 'shihab' check?
