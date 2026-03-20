@@ -42,6 +42,15 @@ body {
     pointer-events: none;
 }
 
+html.session-unlocked .login-screen {
+    display: none;
+}
+
+html.session-unlocked .app-locked {
+    visibility: visible;
+    pointer-events: auto;
+}
+
 .app-entering header,
 .app-entering #home-hero,
 .app-entering #main-menu,
